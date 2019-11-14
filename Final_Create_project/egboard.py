@@ -37,7 +37,7 @@ def getboard(file):	    #imports a board to a nested list from a .csv file
             i += 1
     return board
 
-def removepeg(x,y):
+def removepeg(x,y):     #removes a peg at the given location if one exists and replaces it with an open spot
     if currentboard[y][x] == 1:
         currentboard[y][x] = 0
     else:
@@ -133,6 +133,7 @@ def countpegs(countedboard):
                 pegcount += 1
     return pegcount
 
+
 print('Welcome to Egboard! to start please select your difficulty!')
 #difficulty = input('FIXME!')
 print('What board would you like to play with?\n'
@@ -145,25 +146,24 @@ print('What board would you like to play with?\n'
       '7-custom')
 boardoption = int(input('board:'))        
 if boardoption == 1:
-    boardfile = 'boards//cross.csv'
+    boardfile = 'cross.csv'
 elif boardoption == 2:
-    boardfile = 'boards//asymmetric_cross.csv'
+    boardfile = 'asymmetric_cross.csv'
 elif boardoption == 3:
-    boardfile = 'boards//small_cross.csv'
+    boardfile = 'small_cross.csv'
 elif boardoption == 4:
-    boardfile = 'boards//round.csv'
+    boardfile = 'round.csv'
 elif boardoption == 5:
-    boardfile = 'boards//diamond.csv'
+    boardfile = 'diamond.csv'
 elif boardoption == 6:
-    boardfile = 'boards//triangle.csv'
+    boardfile = 'triangle.csv'
 elif boardoption == 7:
-    boardfile = 'boards//' + input('please input the filename of the custom board file:\n')
+    boardfile =input ('please input the filename of the custom board file:\n')
 
-
+boardfile = os.path.join('boards',boardfile)
 
 
 currentboard = getboard(boardfile)
 
 while len(getallmoves()) > 0:
     executemove()
-    
