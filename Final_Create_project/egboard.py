@@ -39,7 +39,7 @@ def getboard(file):	    #imports a board to a nested list from a .csv file
     return board
 
 def removepeg(x,y):     #removes a peg at the given location if one exists and replaces it with an open spot
-    if currentboard[y][x] == 1:
+    if currentboard[y][x] == (1 or 2):
         currentboard[y][x] = 0
     else:
         print('error, could not replace peg: location not peg: location (%d,%d) is %s' % (x,y,currentboard[y][x]))
@@ -49,6 +49,9 @@ def addpeg(x,y):
         currentboard[y][x] = 1
     else:
         print('error, could not add peg: location not hole: location (%d,%d) is %s' % (x,y,currentboard[y][x]))
+
+def highlightpeg(x,y):      #highlights a peg by replacing it with an "I"
+    currentboard[y][x] = 2
 
 def checkmove(move):
     x1 = move[0]
@@ -79,22 +82,22 @@ def getmove(x,y,direction):
     move=[0,0,0,0,0,0]
     move[0] = x
     move[1] = y
-    if direction == 'up':
+    if direction == 'u':
         move[2] = move[0]
         move[3] = move[1] -1        
         move[4] = move[0]
         move[5] = move[1] - 2
-    if direction == 'down':
+    if direction == 'd':
         move[2] = move[0]
         move[3] = move[1] + 1
         move[4] = move[0]
         move[5] = move[1] + 2
-    if direction == 'right':
+    if direction == 'r':
         move[2] = move[0] + 1
         move[3] = move[1]
         move[4] = move[0] + 2
         move[5] = move[1] 
-    if direction == 'left':
+    if direction == 'l':
         move[2] = move[0] - 1
         move[3] = move[1]
         move[4] = move[0] - 2
@@ -105,7 +108,7 @@ def getallmoves():
     allmoves = []
     for i in range(len(currentboard)):
         for j in range(len(currentboard[i])):
-            for d in ['up','down','right','left']: 
+            for d in ['u','d','r','l']: 
                 testmove = getmove(j, i, d)
                 if checkmove(testmove):
                     allmoves.append(testmove)
@@ -113,10 +116,17 @@ def getallmoves():
 
 def executemove():
     printboard(currentboard)
+    if move_counter != 1:
+        print('You have made %d moves!' %move_counter)
+    else:
+        print('You have made %d move!' %move_counter)
     print('You have %d pegs remaining!' % countpegs(currentboard))
     print('Your Next move')
     x = int(input('X:'))
     y = int(input('Y:'))
+    highlightpeg(x,y)
+    print(currentboard)
+    printboard(currentboard)
     direction = input('Would you like to jump up, down, left, or right\n')
     move = getmove(x,y,direction)
     if checkmove(move):
@@ -134,7 +144,7 @@ def countpegs(countedboard):
                 pegcount += 1
     return pegcount
 
-
+move_counter = 0
 print('Welcome to Egboard! to start please select your difficulty!')
 #difficulty = input('FIXME!')
 print('What board would you like to play with?\n'
@@ -167,3 +177,4 @@ currentboard = getboard(boardfile)
 
 while len(getallmoves()) > 0:
     executemove()
+    move_counter += 1
