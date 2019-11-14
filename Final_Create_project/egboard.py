@@ -1,6 +1,7 @@
 import csv
 import datetime
 import os
+import sys
 
 def printboard(printedboard):	  #prints out the parameterized board board
     r=0
@@ -160,8 +161,7 @@ elif boardoption == 6:
 elif boardoption == 7:
     boardfile =input ('please input the filename of the custom board file:\n')
 
-boardfile = os.path.join('boards',boardfile)
-
+boardfile = os.path.join(sys.path[0],'boards',boardfile)
 
 currentboard = getboard(boardfile)
 
