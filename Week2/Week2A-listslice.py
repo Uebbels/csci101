@@ -1,0 +1,8 @@
+string = input()
+    #print(string)
+a = int(input())
+b = int(input())
+c = int(input())
+d = int(input())
+    #print(a,b,c,d)
+print(string[a:b + 1],string[c:d + 1])
