@@ -1,5 +1,6 @@
 import csv
 import datetime
+import os
 
 def printboard(printedboard):	  #prints out the parameterized board board
     r=0
