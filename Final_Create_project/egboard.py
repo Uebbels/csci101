@@ -178,3 +178,7 @@ currentboard = getboard(boardfile)
 while len(getallmoves()) > 0:
     executemove()
     move_counter += 1
+
+print('No moves remaining!')
+if countpegs(countedboard) == 1:
+    print('One peg left! You have beaten this board!')
