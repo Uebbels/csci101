@@ -50,8 +50,10 @@ def addpeg(x,y):
     else:
         print('error, could not add peg: location not hole: location (%d,%d) is %s' % (x,y,currentboard[y][x]))
 
+'''
 def highlightpeg(x,y):      #highlights a peg by replacing it with an "I"
     currentboard[y][x] = 2
+'''
 
 def checkmove(move):
     x1 = move[0]
@@ -121,12 +123,11 @@ def executemove():
     else:
         print('You have made %d move!' %move_counter)
     print('You have %d pegs remaining!' % countpegs(currentboard))
-    print('Your Next move')
+    print('Your next move')
     x = int(input('X:'))
     y = int(input('Y:'))
-    highlightpeg(x,y)
-    print(currentboard)
-    printboard(currentboard)
+    #highlightpeg(x,y)
+    #printboard(currentboard)
     direction = input('Would you like to jump up, down, left, or right\n')
     move = getmove(x,y,direction)
     if checkmove(move):
@@ -145,8 +146,7 @@ def countpegs(countedboard):
     return pegcount
 
 move_counter = 0
-print('Welcome to Egboard! to start please select your difficulty!')
-#difficulty = input('FIXME!')
+print('Welcome to Egboard!')
 print('What board would you like to play with?\n'
       '1-cross\n'
       '2-asymmetric cross\n'
@@ -169,7 +169,7 @@ elif boardoption == 5:
 elif boardoption == 6:
     boardfile = 'triangle.csv'
 elif boardoption == 7:
-    boardfile =input ('please input the filename of the custom board file:\n')
+    boardfile =input ('please input the filename of the custom board file:\n') + '.csv'
 
 boardfile = os.path.join(sys.path[0],'boards',boardfile)
 
@@ -179,6 +179,10 @@ while len(getallmoves()) > 0:
     executemove()
     move_counter += 1
 
+printboard(currentboard)
+
 print('No moves remaining!')
-if countpegs(countedboard) == 1:
-    print('One peg left! You have beaten this board!')
+if countpegs(currentboard) == 1:
+    print('One peg left! You have beaten this board in %d moves!' % move_counter)
+else:
+    print('%d pegs remaining using %d moves! good job!' % (countpegs(currentboard), move_counter))
