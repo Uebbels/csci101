@@ -3,7 +3,7 @@ import datetime
 import os
 import sys
 
-def printboard(printedboard):	  #prints out the parameterized board board
+def printboard(printedboard):	  #prints out the parameterized board
     r=0
     print(' ', end = ' ')
     for i in range(len(printedboard[0])):
@@ -126,10 +126,9 @@ def executemove():
     print('Your next move')
     x = int(input('X:'))
     y = int(input('Y:'))
-    #highlightpeg(x,y)
-    #printboard(currentboard)
     direction = input('Would you like to jump up, down, left, or right\n')
     move = getmove(x,y,direction)
+    move_list.append(move)
     if checkmove(move):
         removepeg(move[0], move[1])
         removepeg(move[2], move[3])
@@ -145,7 +144,11 @@ def countpegs(countedboard):
                 pegcount += 1
     return pegcount
 
+def record_score(name):
+
+
 move_counter = 0
+move_list = []
 print('Welcome to Egboard!')
 print('What board would you like to play with?\n'
       '1-cross\n'
@@ -186,3 +189,10 @@ if countpegs(currentboard) == 1:
     print('One peg left! You have beaten this board in %d moves!' % move_counter)
 else:
     print('%d pegs remaining using %d moves! good job!' % (countpegs(currentboard), move_counter))
+
+print('Would you like a record of your game? (y/n)')
+choice = input('Choice:')
+if choice == 'y':
+    name = input('name (no spaces):\n')
+    record_score(name)
+print('Thanks for playing!')
