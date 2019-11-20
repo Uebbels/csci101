@@ -1,9 +1,9 @@
 def recursive_sum_odd(list,sum):
     if len(list) == 0:
         return 0
-    elif list[1] % 2 == 0:
-            evenlist.append(list[1])
-        list.remove(list[1])
-        return evenlist + filtereven(list)
+    if list[0] % 2 == 0:
+        print('debug 1',sum)
+        return sum + recursive_sum_odd(list[1:], 0)
     else:
-        return 
+        print('debug 2',sum )
+        return sum + list[0] + recursive_sum_odd(list[1:],0)
