@@ -35,12 +35,9 @@ def get_average_unemp(unemp_list):
 
 yearvalid = False
 
-#GDPfilename = input('Enter the GDP file name:\nGDP>')
-#UEfilename = input('Enter the unemployment file name:\nUNEMPLOYMENT>')
+GDPfilename = input('Enter the GDP file name:\nGDP>')
+UEfilename = input('Enter the unemployment file name:\nUNEMPLOYMENT>')
 
-print('REMOVE ME    !')
-GDPfilename = 'gdp.txt'
-UEfilename = 'unemp.csv'
 
 while yearvalid == False:
     year = int(input('Enter year to examine:\nYEAR>'))
@@ -49,5 +46,8 @@ while yearvalid == False:
     else:
         print('invalid year, please try again')
 
-print(get_gdp_data(GDPfilename,year),get_average_gdp(get_gdp_data(GDPfilename,year)))
-print(get_unemp_data(UEfilename, year), get_average_unemp(get_unemp_data(UEfilename, year)))
+print('For %i, the average GDP is %.2f and the average unemployment rate is %.1f.' % (year, get_average_gdp(get_gdp_data(GDPfilename,year)), get_average_unemp(get_unemp_data(UEfilename, year))))
+print('OUTPUT', year)
+print('OUTPUT %.2f' % get_average_gdp(get_gdp_data(GDPfilename,year)))
+print('OUTPUT %.1f' % get_average_unemp(get_unemp_data(UEfilename, year)))
+
