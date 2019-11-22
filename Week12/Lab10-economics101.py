@@ -10,7 +10,7 @@ def get_gdp_data(fileName, year):
     for i in gdpcontents:
         if i[0:4] == str(year):
             yeardata = i.split()
-            gdp.append(yeardata[1])
+            gdp.append(float(yeardata[1]))
     return gdp
 
 def get_unemp_data(fileName, year):
@@ -20,7 +20,18 @@ def get_unemp_data(fileName, year):
         for i in grades_reader:
             if i[0] == str(year):
                 unemp = i[1:]
+    unemp =[float(i) for i in unemp]
     return unemp
+
+def get_average_gdp(gdp_list):
+    gdpsum = sum(gdp_list)
+    avg =  gdpsum/len(gdp_list)
+    return avg
+
+def get_average_unemp(unemp_list):
+    unempsum = sum(unemp_list)
+    avg = unempsum/len(unemp_list)
+    return avg
 
 yearvalid = False
 
@@ -38,6 +49,5 @@ while yearvalid == False:
     else:
         print('invalid year, please try again')
 
-print(get_gdp_data(GDPfilename,year))
-print(get_unemp_data(UEfilename, year))
-
+print(get_gdp_data(GDPfilename,year),get_average_gdp(get_gdp_data(GDPfilename,year)))
+print(get_unemp_data(UEfilename, year), get_average_unemp(get_unemp_data(UEfilename, year)))
