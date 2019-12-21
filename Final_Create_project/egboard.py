@@ -1,5 +1,5 @@
 import csv
-import datetime
+import time
 import os
 import sys
 
@@ -44,18 +44,13 @@ def removepeg(x,y):     #removes a peg at the given location if one exists and r
     else:
         print('error, could not replace peg: location not peg: location (%d,%d) is %s' % (x,y,currentboard[y][x]))
 
-def addpeg(x,y):
+def addpeg(x,y):        #adds a peg at the given location if it is a valid location
     if currentboard[y][x] == 0:
         currentboard[y][x] = 1
     else:
         print('error, could not add peg: location not hole: location (%d,%d) is %s' % (x,y,currentboard[y][x]))
 
-'''
-def highlightpeg(x,y):      #highlights a peg by replacing it with an "I"
-    currentboard[y][x] = 2
-'''
-
-def checkmove(move):
+def checkmove(move):    #checks if a given move is a valid move to make on the current board
     x1 = move[0]
     y1 = move[1]
     x2 = move[4]
@@ -80,7 +75,7 @@ def checkmove(move):
         else:
             return False
 
-def getmove(x,y,direction):
+def getmove(x,y,direction): #inputs a move from the user
     move=[0,0,0,0,0,0]
     move[0] = x
     move[1] = y
@@ -106,7 +101,7 @@ def getmove(x,y,direction):
         move[5] = move[1]
     return move
 
-def getallmoves():
+def getallmoves():      #returns a list of all valid moves a user can make
     allmoves = []
     for i in range(len(currentboard)):
         for j in range(len(currentboard[i])):
@@ -116,7 +111,7 @@ def getallmoves():
                     allmoves.append(testmove)
     return allmoves
 
-def executemove():
+def executemove():      #main logic of the game, inputs move, checks validity, and if valid executes the move
     printboard(currentboard)
     if move_counter != 1:
         print('You have made %d moves!' %move_counter)
@@ -136,16 +131,13 @@ def executemove():
     else:
         print('move failed, invalid move')
 
-def countpegs(countedboard):
+def countpegs(countedboard): #counts the numbner of pegs currently on the board
     pegcount = 0
     for i in countedboard:
         for j in i:
             if j == (1 or 2):
                 pegcount += 1
     return pegcount
-
-def record_score(name):
-
 
 move_counter = 0
 move_list = []
@@ -178,6 +170,8 @@ boardfile = os.path.join(sys.path[0],'boards',boardfile)
 
 currentboard = getboard(boardfile)
 
+start = time.time()
+
 while len(getallmoves()) > 0:
     executemove()
     move_counter += 1
@@ -185,14 +179,10 @@ while len(getallmoves()) > 0:
 printboard(currentboard)
 
 print('No moves remaining!')
+end = time.time()
 if countpegs(currentboard) == 1:
-    print('One peg left! You have beaten this board in %d moves!' % move_counter)
+    print('One peg left! You have beaten this board using %d moves in %.2f seconds!' %(move_counter, (end-start)))
 else:
-    print('%d pegs remaining using %d moves! good job!' % (countpegs(currentboard), move_counter))
+    print('%d pegs remaining using %d moves in %.2f seconds! good job!' % (countpegs(currentboard), move_counter, (end-start)))
 
-print('Would you like a record of your game? (y/n)')
-choice = input('Choice:')
-if choice == 'y':
-    name = input('name (no spaces):\n')
-    record_score(name)
 print('Thanks for playing!')
